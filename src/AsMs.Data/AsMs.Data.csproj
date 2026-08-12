@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\DevSkillProjects\aspnet-b6\src\Web\FirstDemo\FirstDemo.Data\IEntity.cs" Link="IEntity.cs" />
+    <Compile Include="..\..\..\DevSkillProjects\aspnet-b6\src\Web\FirstDemo\FirstDemo.Data\IRepository.cs" Link="IRepository.cs" />
+    <Compile Include="..\..\..\DevSkillProjects\aspnet-b6\src\Web\FirstDemo\FirstDemo.Data\IUnitOfWork.cs" Link="IUnitOfWork.cs" />
+    <Compile Include="..\..\..\DevSkillProjects\aspnet-b6\src\Web\FirstDemo\FirstDemo.Data\Repository.cs" Link="Repository.cs" />
+    <Compile Include="..\..\..\DevSkillProjects\aspnet-b6\src\Web\FirstDemo\FirstDemo.Data\UnitOfWork.cs" Link="UnitOfWork.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.11" />
+	  <PackageReference Include="System.Linq.Dynamic.Core" Version="1.7.3" />
+  </ItemGroup>
+
+</Project>

@@ -1,4 +1,5 @@
 <Solution>
-  <Project Path="ASMS.Api/ASMS.Api.csproj" DisplayName="AsMs.Api" />
-  <Project Path="ASMS.Web/ASMS.Web.csproj" DisplayName="AsMs.Web" />
+  <Project Path="ASMS.Api/ASMS.Api.csproj" />
+  <Project Path="AsMs.Data/AsMs.Data.csproj" />
+  <Project Path="ASMS.Web/ASMS.Web.csproj" />
 </Solution>
