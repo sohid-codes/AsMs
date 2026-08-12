@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text;
+using System.Text.Json.Serialization;
 using AsMs.Api.Authentication;
 using AsMs.Data.Identity;
 using AsMs.Data.Persistence;
@@ -58,7 +59,8 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero
     });
 
-builder.Services.AddControllers();
+builder.Services.AddCors(options => options.AddPolicy("WebClient", policy => policy.WithOrigins("http://localhost:3000", "http://127.0.0.1:3000").AllowAnyHeader().AllowAnyMethod()));
+builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -115,6 +117,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("WebClient");
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

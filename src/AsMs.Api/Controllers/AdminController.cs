@@ -13,11 +13,16 @@ namespace AsMs.Api.Controllers;
 [Route("api/admin")]
 public class AdminController(ApplicationDbContext db, UserManager<ApplicationUser> users) : ControllerBase
 {
-    [HttpGet("users")]
-    public async Task<IActionResult> GetUsers() => Ok(await users.Users
-        .OrderBy(user => user.Email)
-        .Select(user => new { user.Id, user.FullName, user.Email, user.IsActive })
-        .ToListAsync());
+[HttpGet("users")]
+    public async Task<IActionResult> GetUsers()
+    {
+        var result = new List<object>();
+        foreach (var user in await users.Users.OrderBy(user => user.Email).ToListAsync())
+        {
+            result.Add(new { user.Id, user.FullName, user.Email, user.IsActive, Roles = await users.GetRolesAsync(user) });
+        }
+        return Ok(result);
+    }
 
     [HttpPost("users")]
     public async Task<IActionResult> CreateUser(CreateUserRequest request)
