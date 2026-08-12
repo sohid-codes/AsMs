@@ -1,4 +1,4 @@
-namespace ASMS.Api
+namespace AsMs.Api
 {
     public class WeatherForecast
     {

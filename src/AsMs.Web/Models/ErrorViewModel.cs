@@ -1,4 +1,4 @@
-namespace ASMS.Web.Models
+namespace AsMs.Web.Models
 {
     public class ErrorViewModel
     {
