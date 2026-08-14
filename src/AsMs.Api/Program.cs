@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using AsMs.Api.Authentication;
 using AsMs.Application;
+using AsMs.Application.Services;
 using AsMs.Data.Identity;
 using AsMs.Data.Persistence;
 using Autofac;
