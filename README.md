@@ -62,7 +62,7 @@ Development configuration is in `src/ASMS.Api/appsettings.Development.json`:
     "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=ASMSDb;Trusted_Connection=True;TrustServerCertificate=True"
   },
   "Serilog": {
-    "LogDirectory": "C:\\Logs\\ASMS\\ASMS.Api.Log"
+    "LogFilePath": "C:\\Logs\\ASMS\\AsMs.Web.Api.Log-.log"
   },
   "Jwt": {
     "Issuer": "ASMS.Api",
@@ -80,7 +80,7 @@ $env:ConnectionStrings__DefaultConnection = "Server=SERVER;Database=ASMSDb;Trust
 $env:Jwt__SigningKey = "a-long-random-production-secret"
 $env:Jwt__Issuer = "ASMS.Api"
 $env:Jwt__Audience = "ASMS.Web"
-$env:Serilog__LogDirectory = "C:\Logs\ASMS\ASMS.Api.Log"
+$env:Serilog__LogFilePath = "C:\Logs\ASMS\AsMs.Web.Api.Log-.log"
 ```
 
 ### Web
@@ -89,7 +89,7 @@ Copy `src/AsMs.Web/.env.example` to `src/AsMs.Web/.env.local` and set:
 
 ```dotenv
 NEXT_PUBLIC_API_BASE_URL=https://localhost:7295
-WEB_LOG_DIRECTORY=C:\Logs\ASMS\AsMs.Web.Log
+WEB_LOG_FILE_PATH=C:\Logs\ASMS\AsMs.Web.Log
 ```
 
 For a deployed frontend, `NEXT_PUBLIC_API_BASE_URL` must be the public HTTPS address of the API. Because this variable is embedded during `next build`, set it before building the web application.
@@ -159,7 +159,7 @@ These are development-only credentials. Change or remove them before any public 
 
 1. Install the .NET 10 ASP.NET Core Hosting Bundle on the server and restart IIS.
 2. Provision a SQL Server database and give the IIS application identity the required database access. For SQL authentication, use a protected connection string rather than committing credentials.
-3. Set production configuration, especially `ConnectionStrings__DefaultConnection`, `Jwt__SigningKey`, and `Serilog__LogDirectory`.
+3. Set production configuration, especially `ConnectionStrings__DefaultConnection`, `Jwt__SigningKey`, and `Serilog__LogFilePath`.
 4. Create the database schema during the release process:
 
    ```powershell
@@ -172,7 +172,7 @@ These are development-only credentials. Change or remove them before any public 
    dotnet publish src/ASMS.Api/ASMS.Api.csproj -c Release -o .\publish\api
    ```
 
-6. Create an IIS site/app pool pointing to `publish\api`, configure HTTPS, and grant the app pool Modify access to `C:\Logs\ASMS\ASMS.Api.Log`.
+6. Create an IIS site/app pool pointing to `publish\api`, configure HTTPS, and grant the app pool Modify access to `C:\Logs\ASMS\AsMs.Web.Api.Log-.log`.
 7. Confirm `/swagger` is available only if you intentionally enable Swagger outside Development. The current code exposes Swagger in Development only.
 
 ### Web deployment
@@ -182,7 +182,7 @@ These are development-only credentials. Change or remove them before any public 
    ```powershell
    cd src/AsMs.Web
    $env:NEXT_PUBLIC_API_BASE_URL = "https://api.example.com"
-   $env:WEB_LOG_DIRECTORY = "C:\Logs\ASMS\AsMs.Web.Log"
+   $env:WEB_LOG_FILE_PATH = "C:\Logs\ASMS\AsMs.Web.Log"
    npm ci
    npm run build
    ```
@@ -202,8 +202,8 @@ The API currently allows local Next.js development origins through its CORS poli
 
 | Application | Folder |
 | --- | --- |
-| API | `C:\Logs\ASMS\ASMS.Api.Log` |
-| Web client errors | `C:\Logs\ASMS\AsMs.Web.Log` |
+| API | `C:\Logs\ASMS\AsMs.Web.Api.Log-YYYYMMDD.log` |
+| Web client errors | `C:\Logs\ASMS\AsMs.Web.Log-YYYYMMDD.log` |
 
 Ensure the relevant service account has permission to create and append files in its log folder. Set log retention, disk monitoring, and central log collection according to the hosting environment.
 

@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
-const logDirectory = process.env.WEB_LOG_DIRECTORY ?? "C:\\Logs\\ASMS\\AsMs.Web.Log";
+const logFilePath = process.env.WEB_LOG_FILE_PATH ?? "C:\\Logs\\ASMS\\AsMs.Web.Log";
 
 export async function POST(request: Request) {
   try {
@@ -13,10 +13,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ title: "Invalid log payload." }, { status: 400 });
     }
 
-    await mkdir(logDirectory, { recursive: true });
+    await mkdir(path.dirname(logFilePath), { recursive: true });
     const date = new Date().toISOString().slice(0, 10).replaceAll("-", "");
+    const datedLogFilePath = `${logFilePath}-${date}.log`;
     const entry = JSON.stringify({ timestampUtc: new Date().toISOString(), level: body.level, message: body.message, metadata: body.metadata ?? {} });
-    await appendFile(path.join(logDirectory, `asms-web-${date}.log`), `${entry}\n`, "utf8");
+    await appendFile(datedLogFilePath, `${entry}\n`, "utf8");
     return new NextResponse(null, { status: 204 });
   } catch {
     return NextResponse.json({ title: "Unable to record client log." }, { status: 500 });

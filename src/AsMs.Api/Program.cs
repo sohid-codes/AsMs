@@ -18,9 +18,8 @@ using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var logDirectory = builder.Configuration["Serilog:LogDirectory"] ?? @"C:\Logs\ASMS";
-Directory.CreateDirectory(logDirectory);
-var logFilePath = Path.Combine(logDirectory, "asms-.log");
+var logFilePath = builder.Configuration["Serilog:LogFilePath"] ?? @"C:\Logs\ASMS\AsMs.Web.Api.Log-.log";
+Directory.CreateDirectory(Path.GetDirectoryName(logFilePath) ?? @"C:\Logs\ASMS");
 
 builder.Host.UseSerilog((context, services, loggerConfiguration) => loggerConfiguration
     .MinimumLevel.Information()
@@ -28,7 +27,6 @@ builder.Host.UseSerilog((context, services, loggerConfiguration) => loggerConfig
     .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Warning)
     .Enrich.FromLogContext()
     .Enrich.WithProperty("Application", "ASMS")
-    .WriteTo.Console()
     .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 30, shared: true));
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
@@ -83,7 +81,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
-Log.Information("Starting ASMS API; logs are written to {LogDirectory}", logDirectory);
+Log.Information("Starting ASMS API; logs are written to {LogFilePath}", logFilePath);
 
 app.UseExceptionHandler(exceptionApp => exceptionApp.Run(async context =>
 {
