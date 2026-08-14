@@ -2,4 +2,5 @@
   <Project Path="ASMS.Api/ASMS.Api.csproj" />
   <Project Path="AsMs.Domain/AsMs.Domain.csproj" />
   <Project Path="AsMs.Data/AsMs.Data.csproj" />
+  <Project Path="AsMs.Application/AsMs.Application.csproj" />
 </Solution>

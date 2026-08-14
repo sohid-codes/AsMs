@@ -2,9 +2,10 @@ using System.Diagnostics;
 using System.Text;
 using System.Text.Json.Serialization;
 using AsMs.Api.Authentication;
+using AsMs.Application;
 using AsMs.Data.Identity;
 using AsMs.Data.Persistence;
-using AsMs.Data.Repositories;
+using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -30,6 +31,7 @@ builder.Host.UseSerilog((context, services, loggerConfiguration) => loggerConfig
     .WriteTo.File(logFilePath, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 30, shared: true));
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(container => container.RegisterModule<AsmsModule>());
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' was not found.");
@@ -38,13 +40,6 @@ var jwtOptions = builder.Configuration.GetSection(JwtOptions.SectionName).Get<Jw
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddScoped<DevelopmentIdentitySeeder>();
-builder.Services.AddScoped<IAcademicClassRepository, AcademicClassRepository>();
-builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
-builder.Services.AddScoped<ITeacherClassSubjectRepository, TeacherClassSubjectRepository>();
-builder.Services.AddScoped<IStudentEnrollmentRepository, StudentEnrollmentRepository>();
-builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
-builder.Services.AddScoped<ISubmissionRepository, SubmissionRepository>();
-builder.Services.AddScoped<IAsmsUnitOfWork, AsmsUnitOfWork>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();

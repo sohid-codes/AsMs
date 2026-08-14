@@ -1,5 +1,6 @@
-﻿using AsMs.Data.Identity;
-using AsMs.Data.Repositories;
+using AsMs.Data.Identity;
+using AsMs.Application.Repositories;
+using AsMs.Application.UnitOfWorks;
 using AsMs.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

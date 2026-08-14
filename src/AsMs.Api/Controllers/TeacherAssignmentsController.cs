@@ -1,6 +1,7 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using AsMs.Data.Identity;
-using AsMs.Data.Repositories;
+using AsMs.Application.Repositories;
+using AsMs.Application.UnitOfWorks;
 using AsMs.Domain.Entities;
 using AsMs.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;

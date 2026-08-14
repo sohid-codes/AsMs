@@ -1,17 +1,6 @@
 using AsMs.Domain.Entities;
 
-namespace AsMs.Data.Repositories;
-
-public interface IAsmsUnitOfWork : IDisposable
-{
-    IAcademicClassRepository AcademicClasses { get; }
-    ISubjectRepository Subjects { get; }
-    ITeacherClassSubjectRepository TeacherClassSubjects { get; }
-    IStudentEnrollmentRepository StudentEnrollments { get; }
-    IAssignmentRepository Assignments { get; }
-    ISubmissionRepository Submissions { get; }
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-}
+namespace AsMs.Application.Repositories;
 
 public interface IAcademicClassRepository
 {
