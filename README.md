@@ -223,7 +223,13 @@ cd src/AsMs.Web
 npm run build
 ```
 
-The current repository does not include test-project source files. Add NUnit/xUnit tests for the service-layer rules before submission, especially teacher ownership, assignment deadlines, duplicate submission prevention, grade limits, and role-protected endpoints.
+Run the application-service unit tests with FakeItEasy:
+
+```powershell
+dotnet test src/Tests/AsMs.Application.Tests/AsMs.Application.Tests.csproj
+``` 
+
+The current test suite covers expired and duplicate submissions, teacher ownership during grading, and maximum-mark validation. Add API authorization tests and broader workflow coverage before final submission.
 
 ## Assumptions and known limitations
 
