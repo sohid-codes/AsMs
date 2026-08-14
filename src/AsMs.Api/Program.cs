@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using AsMs.Api.Authentication;
 using AsMs.Data.Identity;
 using AsMs.Data.Persistence;
+using AsMs.Data.Repositories;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -37,6 +38,13 @@ var jwtOptions = builder.Configuration.GetSection(JwtOptions.SectionName).Get<Jw
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddScoped<DevelopmentIdentitySeeder>();
+builder.Services.AddScoped<IAcademicClassRepository, AcademicClassRepository>();
+builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
+builder.Services.AddScoped<ITeacherClassSubjectRepository, TeacherClassSubjectRepository>();
+builder.Services.AddScoped<IStudentEnrollmentRepository, StudentEnrollmentRepository>();
+builder.Services.AddScoped<IAssignmentRepository, AssignmentRepository>();
+builder.Services.AddScoped<ISubmissionRepository, SubmissionRepository>();
+builder.Services.AddScoped<IAsmsUnitOfWork, AsmsUnitOfWork>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
