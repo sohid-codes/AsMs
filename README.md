@@ -23,7 +23,7 @@ ASMS is a role-based school or college application for managing assignments, stu
 | Dependency injection | Autofac |
 | Logging | Serilog (API), file-backed Next.js error logging |
 
-The recruitment brief permits PostgreSQL or MongoDB. SQL Server was deliberately selected for this implementation, as agreed for the project; the supplied EF Core migration targets SQL Server.
+The SQL Server was deliberately selected for this implementation the supplied EF Core migration targets SQL Server.
 
 ## Solution structure
 
@@ -230,20 +230,3 @@ dotnet test src/Tests/AsMs.Application.Tests/AsMs.Application.Tests.csproj
 ``` 
 
 The current test suite covers expired and duplicate submissions, teacher ownership during grading, and maximum-mark validation. Add API authorization tests and broader workflow coverage before final submission.
-
-## Assumptions and known limitations
-
-- A student can have one submission per assignment and can update it only before the deadline.
-- A teacher can grade only submissions associated with that teacher's allocation.
-- Assignments with submissions cannot be deleted.
-- Roles are enforced by the API; the frontend is a convenience layer, not a security boundary.
-- No document/file upload, notifications, pagination, advanced filtering, or email workflow is implemented.
-- SQL Server is used instead of the brief's PostgreSQL/MongoDB options by project decision.
-- Production CORS origins and secrets must be configured before deployment.
-
-## Submission checklist
-
-- Commit the source, migrations, this README, and `.env.example` files.
-- Do not commit `.env.local`, production `appsettings.*.json`, database backups containing sensitive data, or real secrets.
-- Verify database migration, API Swagger endpoint, frontend login, and all three demo roles from a clean machine.
-- Add and execute automated tests before submitting the repository link.
